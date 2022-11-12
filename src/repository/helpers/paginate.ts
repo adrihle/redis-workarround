@@ -39,10 +39,13 @@ async function paginate<T>(params: PaginateParams<T>): ReturnPagination<T> {
   const isFirstPage = page < 1;
   const isLastPage = page * offset + offset >= totalCount;
 
+  const totalPages = Math.ceil(totalCount / offset);
+
   return {
     results,
     totalCount,
     page,
+    totalPages,
     prevPage: !isFirstPage ? page - 1 : null,
     nextPage: !isLastPage ? page + 1 : null,
   };

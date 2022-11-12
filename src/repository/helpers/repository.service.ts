@@ -14,7 +14,7 @@ import { paginate } from './paginate';
 @Injectable()
 export abstract class RepositoryService<T> {
   private readonly defaultConfig: RepositoryConfig<T>['default'] = {
-    page: 0,
+    page: 1,
     offset: 20,
   };
 
