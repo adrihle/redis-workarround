@@ -8,8 +8,8 @@ export class MongoIdValidation implements PipeTransform<string> {
       if (String(new ObjectId(value)) === value) {
         return value;
       }
-      throw new BadRequestException('Id must be a valid ObjectId');
+      throw new BadRequestException('Param id must be a valid ObjectId');
     }
-    throw new BadRequestException('Id must be a valid ObjectId');
+    throw new BadRequestException('Param id must be a valid ObjectId');
   }
 }
