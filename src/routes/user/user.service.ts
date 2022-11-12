@@ -6,12 +6,18 @@ export class UserService {
   @Inject()
   private readonly repository: UserRepository;
 
-  async list() {
-    return this.repository.list();
+  async list(query: any = {}) {
+    const { page, offset } = query;
+    return this.repository.pagination({
+      pagination: {
+        page,
+        offset,
+      },
+    });
   }
 
   async get(id: string) {
-    return this.repository.get(id);
+    return this.repository.lookById(id);
   }
 
   async create(user: User) {

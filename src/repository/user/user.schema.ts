@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IntersectionType } from '@nestjs/swagger';
-import { MongoSchema } from '../modules';
+import { MongoSchema } from '../helpers';
 
 @Schema({ timestamps: true })
 export class User {
