@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { RoutesModule } from './routes/routes.module';
-import { InterceptorsModule } from './interceptors/interceptors.module';
-import { ConfigModule } from './config/config.module';
+import { RoutesModule } from '@routes';
+import { Interceptors } from '@providers';
+import { ConfigModule } from '@config';
+
+const { GlobalInterceptorsModule } = Interceptors;
 
 @Module({
-  imports: [RoutesModule, InterceptorsModule, ConfigModule],
+  imports: [RoutesModule, GlobalInterceptorsModule, ConfigModule],
 })
 export class AppModule {}
