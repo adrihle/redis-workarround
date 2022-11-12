@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
     "paths": {
-      "@repository": ["src/repository"]
+      "@repository/*": ["src/repository/*"],
+      "@repository": ["src/repository"],
+      "@routes/*": ["src/routes/*"],
+      "@routes": ["src/routes"],
+      "@config": ["src/config"],
+      "@providers": ["src/providers"]
     }
   }
 }

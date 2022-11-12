@@ -1,9 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IntersectionType } from '@nestjs/swagger';
+import { IsDefined, IsString } from 'class-validator';
 import { MongoSchema } from '../helpers';
 
 @Schema({ timestamps: true })
 class User {
+  @IsString()
+  @IsDefined()
   @Prop({ type: String, required: true })
   name: string;
 }

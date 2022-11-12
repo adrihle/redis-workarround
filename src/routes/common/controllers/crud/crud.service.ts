@@ -1,5 +1,7 @@
+import { Injectable } from '@nestjs/common';
 import { RepositoryService } from '@repository';
 
+@Injectable()
 export class CrudService<T> {
   constructor(private readonly base: RepositoryService<T>) {}
 
