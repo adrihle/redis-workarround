@@ -5,7 +5,7 @@ import { CrudService } from './crud.service';
 const BASE_CRUD = 'crud';
 const PARAM_ID_BASE_CRUD = `${BASE_CRUD}/:id`;
 
-export class CrudController<T> extends CrudService<T> {
+export abstract class CrudController<T> extends CrudService<T> {
   constructor(private readonly repository: RepositoryService<T>) {
     super(repository);
   }

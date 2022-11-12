@@ -42,6 +42,7 @@ type ReturnPagination<T> = Promise<{
   results: Document<T>[];
   totalCount: number;
   page: number;
+  totalPages: number;
   nextPage?: number;
   prevPage?: number;
 }>;
