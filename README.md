@@ -1,3 +1,5 @@
+# PROJECT DOCUMENTATION
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
@@ -24,7 +26,11 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a base project for create scalable and maintenable backend microservices with Redis and MongoDB
+
+## Workarround
+
+- Versioning approaches: [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) and [gitflow](https://www.atlassian.com/es/git/tutorials/comparing-workflows/gitflow-workflow)
 
 ## Installation
 
