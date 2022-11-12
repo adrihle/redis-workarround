@@ -1,4 +1,4 @@
-import { Param } from '@nestjs/common';
+import { Param, Query } from '@nestjs/common';
 import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { User, UserDocument } from '@repository';
 import { UserService } from './user.service';
@@ -9,8 +9,8 @@ export class UserController {
   private readonly service: UserService;
 
   @Get()
-  list() {
-    return this.service.list();
+  list(@Query() query: any = {}) {
+    return this.service.list(query);
   }
 
   @Get(':id')
