@@ -1,9 +1,20 @@
-import { Controller, Get, Inject, Type } from '@nestjs/common';
-import { ApiOkResponse, ApiTags, IntersectionType } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
+import { ApiTags, IntersectionType } from '@nestjs/swagger';
 import { CrudModuleConfig } from './crud.module';
 import { CrudService } from './crud.service';
-import { plainToInstance } from 'class-transformer';
 import { MongoSchema } from '@repository/helpers';
+import { PaginationQueryDTO } from '@routes/common/dtos';
+import { Pipes } from '@providers';
 
 const getControllerParam = (route: string) => {
   const sanitizedRoute = route.split(' ').join('');
@@ -15,27 +26,51 @@ const getControllerParam = (route: string) => {
   };
 };
 
-const getCrudController = <T>(config: CrudModuleConfig<T>): Type<any> => {
+const { MongoIdValidation } = Pipes;
+
+const BASE_CRUD = 'crud';
+
+const getCrudController = <T>(config: CrudModuleConfig<T>) => {
   const { routeBase, DTO } = config;
   class Dto extends DTO {}
+  Object.defineProperty(Dto, 'name', { value: DTO.name });
   class DocumentDto extends IntersectionType(Dto, MongoSchema) {}
+  Object.defineProperty(DocumentDto, 'name', { value: DTO.name });
+
   const { sanitizedRoute, controllerName } = getControllerParam(routeBase);
-  console.log(DocumentDto);
 
   @ApiTags(sanitizedRoute)
-  @Controller(`${sanitizedRoute}/crud`)
+  @Controller(`${sanitizedRoute}/${BASE_CRUD}`)
   class CrudController {
     @Inject()
-    service: CrudService<T>;
+    readonly service: CrudService<T>;
+
+    @Get(':id')
+    crudGet(@Param('id', MongoIdValidation) id: string) {
+      return this.service._get(id);
+    }
 
     @Get()
-    @ApiOkResponse({
-      type: DocumentDto,
-      isArray: true,
-      description: `${DTO.name}s list`,
-    })
-    async crud_get(): Promise<DocumentDto[]> {
-      return plainToInstance(DocumentDto, await this.service.get());
+    crudPagination(@Query() query: PaginationQueryDTO) {
+      return this.service._pagination(query);
+    }
+
+    @Post()
+    crudCreate(@Body() body: Dto) {
+      return this.service._create(body);
+    }
+
+    @Put(':id')
+    crudUpdate(
+      @Param('id', MongoIdValidation) id: string,
+      @Body() body: Partial<Dto>,
+    ) {
+      return this.service._update(id, body);
+    }
+
+    @Delete(':id')
+    crudRemove(@Param('id', MongoIdValidation) id: string) {
+      return this.service._remove(id);
     }
   }
 

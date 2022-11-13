@@ -1,10 +1,8 @@
-import { DynamicModule, Module, Type } from '@nestjs/common';
-import { RepositoryService, RepositoryModule } from '@repository';
-import { CrudService } from './crud.service';
+import { DynamicModule, Module } from '@nestjs/common';
+import { CrudService, REPOSITORY_TOKEN } from './crud.service';
 import { getCrudController } from './getCrudController';
-import { ClassConstructor } from 'class-transformer';
 
-export type CrudModuleConfig<T> = {
+type CrudModuleConfig<T> = {
   routeBase: string;
   repository: any;
   repositoryModule: any;
@@ -12,7 +10,7 @@ export type CrudModuleConfig<T> = {
 };
 
 @Module({})
-export class CrudModule {
+class CrudModule {
   static register<T>(config: CrudModuleConfig<T>): DynamicModule {
     const { repository, repositoryModule } = config;
     const Controller = getCrudController<T>(config);
@@ -21,7 +19,7 @@ export class CrudModule {
       imports: [repositoryModule],
       providers: [
         {
-          provide: 'REPOSITORY',
+          provide: REPOSITORY_TOKEN,
           useExisting: repository,
         },
         CrudService,
@@ -30,3 +28,5 @@ export class CrudModule {
     };
   }
 }
+
+export { CrudModuleConfig, CrudModule };
