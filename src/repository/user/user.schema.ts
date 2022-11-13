@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IntersectionType } from '@nestjs/swagger';
+import { ApiProperty, IntersectionType } from '@nestjs/swagger';
 import { IsDefined, IsString } from 'class-validator';
 import { MongoSchema } from '../helpers';
 
@@ -8,6 +8,7 @@ class User {
   @IsString()
   @IsDefined()
   @Prop({ type: String, required: true })
+  @ApiProperty({ type: String })
   name: string;
 }
 
