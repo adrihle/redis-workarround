@@ -1,1 +1,1 @@
-export { CrudController } from './crud.controller';
+export { CrudModule } from './crud.module';
