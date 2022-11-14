@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { RepositoryService } from '@repository/helpers';
+import { ClassConstructor } from 'class-transformer';
 
 export const REPOSITORY_TOKEN = 'REPOSITORY';
 @Injectable()
 export class CrudService<T> {
   @Inject(REPOSITORY_TOKEN)
-  private readonly base: RepositoryService<T>;
+  private readonly base: RepositoryService<ClassConstructor<T>>;
 
   async _get(id: string) {
     return this.base.lookById(id);
@@ -17,7 +18,7 @@ export class CrudService<T> {
     });
   }
 
-  async _create(payload: T) {
+  async _create(payload: ClassConstructor<T>) {
     return this.base.create(payload);
   }
 

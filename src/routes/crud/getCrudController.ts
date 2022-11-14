@@ -35,7 +35,7 @@ const getCrudController = <T>(config: CrudModuleConfig<T>) => {
   class Dto extends DTO {}
   Object.defineProperty(Dto, 'name', { value: DTO.name });
   class DocumentDto extends IntersectionType(Dto, MongoSchema) {}
-  Object.defineProperty(DocumentDto, 'name', { value: DTO.name });
+  Object.defineProperty(DocumentDto, 'name', { value: `Document${DTO.name}` });
 
   const { sanitizedRoute, controllerName } = getControllerParam(routeBase);
 

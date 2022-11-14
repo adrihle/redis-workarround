@@ -1,12 +1,14 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, Module, Type } from '@nestjs/common';
 import { CrudService, REPOSITORY_TOKEN } from './crud.service';
 import { getCrudController } from './getCrudController';
+import { RepositoryModule } from '@repository/repository.module';
+import { RepositoryService } from '@repository/helpers';
 
 type CrudModuleConfig<T> = {
   routeBase: string;
-  repository: any;
-  repositoryModule: any;
-  DTO: any;
+  repository: Type<RepositoryService<T>>;
+  repositoryModule: Type<RepositoryModule>;
+  DTO: { new () };
 };
 
 @Module({})
